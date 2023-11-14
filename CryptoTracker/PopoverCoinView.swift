@@ -185,23 +185,19 @@ struct PopoverCoinView: View {
         .onChange(of: viewModel.selectedCoinType) { _ in
             viewModel.updateView()
             fetchData()
-            print(chartData.enumerated().map { (index, item) in
-                item.prices
-            }, "demo")
+          
         }
         .onAppear {
             viewModel.subscribeToService()
             fetchData()
-            print(chartData.enumerated().map { (index, item) in
-                item.prices
-            }, "gokul121212121212")
+        
             
         }
         
     }
     
     func fetchData() {
-        guard let url = URL(string: "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=1") else { return }
+        guard let url = URL(string: "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=10") else { return }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
