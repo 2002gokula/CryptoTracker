@@ -7,13 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		550F44A92AFB92D600A5391E /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550F44A82AFB92D600A5391E /* ChartView.swift */; };
 		55B3D39A2AF24F3600D76831 /* CryptoTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B3D3992AF24F3600D76831 /* CryptoTrackerApp.swift */; };
-		55B3D39C2AF24F3600D76831 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B3D39B2AF24F3600D76831 /* ContentView.swift */; };
 		55B3D39E2AF24F3700D76831 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55B3D39D2AF24F3700D76831 /* Assets.xcassets */; };
 		55B3D3A12AF24F3700D76831 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55B3D3A02AF24F3700D76831 /* Preview Assets.xcassets */; };
 		55B3D3AC2AF24F3700D76831 /* CryptoTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B3D3AB2AF24F3700D76831 /* CryptoTrackerTests.swift */; };
 		55B3D3B62AF24F3700D76831 /* CryptoTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B3D3B52AF24F3700D76831 /* CryptoTrackerUITests.swift */; };
 		55B3D3B82AF24F3700D76831 /* CryptoTrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B3D3B72AF24F3700D76831 /* CryptoTrackerUITestsLaunchTests.swift */; };
+		55B3D3CC2AF2501F00D76831 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B3D3C42AF2501F00D76831 /* AppDelegate.swift */; };
+		55B3D3CD2AF2501F00D76831 /* MenuBarCoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B3D3C52AF2501F00D76831 /* MenuBarCoinViewModel.swift */; };
+		55B3D3CE2AF2501F00D76831 /* CoinCapPriceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B3D3C62AF2501F00D76831 /* CoinCapPriceService.swift */; };
+		55B3D3CF2AF2501F00D76831 /* CoinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B3D3C72AF2501F00D76831 /* CoinType.swift */; };
+		55B3D3D02AF2502000D76831 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B3D3C82AF2501F00D76831 /* Coin.swift */; };
+		55B3D3D12AF2502000D76831 /* PopoverCoinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B3D3C92AF2501F00D76831 /* PopoverCoinView.swift */; };
+		55B3D3D22AF2502000D76831 /* MenuBarCoinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B3D3CA2AF2501F00D76831 /* MenuBarCoinView.swift */; };
+		55B3D3D32AF2502000D76831 /* PopoverCoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B3D3CB2AF2501F00D76831 /* PopoverCoinViewModel.swift */; };
+		55B3D3D52AF2503D00D76831 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55B3D3D42AF2503D00D76831 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,9 +43,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		550F44A82AFB92D600A5391E /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		55B3D3962AF24F3600D76831 /* CryptoTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B3D3992AF24F3600D76831 /* CryptoTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoTrackerApp.swift; sourceTree = "<group>"; };
-		55B3D39B2AF24F3600D76831 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		55B3D39D2AF24F3700D76831 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		55B3D3A02AF24F3700D76831 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		55B3D3A22AF24F3700D76831 /* CryptoTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CryptoTracker.entitlements; sourceTree = "<group>"; };
@@ -45,6 +54,15 @@
 		55B3D3B12AF24F3700D76831 /* CryptoTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CryptoTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B3D3B52AF24F3700D76831 /* CryptoTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoTrackerUITests.swift; sourceTree = "<group>"; };
 		55B3D3B72AF24F3700D76831 /* CryptoTrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoTrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		55B3D3C42AF2501F00D76831 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		55B3D3C52AF2501F00D76831 /* MenuBarCoinViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBarCoinViewModel.swift; sourceTree = "<group>"; };
+		55B3D3C62AF2501F00D76831 /* CoinCapPriceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinCapPriceService.swift; sourceTree = "<group>"; };
+		55B3D3C72AF2501F00D76831 /* CoinType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinType.swift; sourceTree = "<group>"; };
+		55B3D3C82AF2501F00D76831 /* Coin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
+		55B3D3C92AF2501F00D76831 /* PopoverCoinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverCoinView.swift; sourceTree = "<group>"; };
+		55B3D3CA2AF2501F00D76831 /* MenuBarCoinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBarCoinView.swift; sourceTree = "<group>"; };
+		55B3D3CB2AF2501F00D76831 /* PopoverCoinViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverCoinViewModel.swift; sourceTree = "<group>"; };
+		55B3D3D42AF2503D00D76831 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,11 +113,19 @@
 		55B3D3982AF24F3600D76831 /* CryptoTracker */ = {
 			isa = PBXGroup;
 			children = (
+				55B3D3D42AF2503D00D76831 /* Info.plist */,
 				55B3D3992AF24F3600D76831 /* CryptoTrackerApp.swift */,
-				55B3D39B2AF24F3600D76831 /* ContentView.swift */,
 				55B3D39D2AF24F3700D76831 /* Assets.xcassets */,
 				55B3D3A22AF24F3700D76831 /* CryptoTracker.entitlements */,
 				55B3D39F2AF24F3700D76831 /* Preview Content */,
+				55B3D3C82AF2501F00D76831 /* Coin.swift */,
+				55B3D3C62AF2501F00D76831 /* CoinCapPriceService.swift */,
+				55B3D3C72AF2501F00D76831 /* CoinType.swift */,
+				55B3D3CA2AF2501F00D76831 /* MenuBarCoinView.swift */,
+				55B3D3C52AF2501F00D76831 /* MenuBarCoinViewModel.swift */,
+				55B3D3C92AF2501F00D76831 /* PopoverCoinView.swift */,
+				55B3D3CB2AF2501F00D76831 /* PopoverCoinViewModel.swift */,
+				550F44A82AFB92D600A5391E /* ChartView.swift */,
 			);
 			path = CryptoTracker;
 			sourceTree = "<group>";
@@ -107,6 +133,7 @@
 		55B3D39F2AF24F3700D76831 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				55B3D3C42AF2501F00D76831 /* AppDelegate.swift */,
 				55B3D3A02AF24F3700D76831 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
@@ -235,6 +262,7 @@
 			files = (
 				55B3D3A12AF24F3700D76831 /* Preview Assets.xcassets in Resources */,
 				55B3D39E2AF24F3700D76831 /* Assets.xcassets in Resources */,
+				55B3D3D52AF2503D00D76831 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,8 +287,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55B3D39C2AF24F3600D76831 /* ContentView.swift in Sources */,
+				55B3D3D22AF2502000D76831 /* MenuBarCoinView.swift in Sources */,
+				55B3D3CD2AF2501F00D76831 /* MenuBarCoinViewModel.swift in Sources */,
+				55B3D3CE2AF2501F00D76831 /* CoinCapPriceService.swift in Sources */,
+				550F44A92AFB92D600A5391E /* ChartView.swift in Sources */,
+				55B3D3D32AF2502000D76831 /* PopoverCoinViewModel.swift in Sources */,
+				55B3D3CF2AF2501F00D76831 /* CoinType.swift in Sources */,
+				55B3D3CC2AF2501F00D76831 /* AppDelegate.swift in Sources */,
 				55B3D39A2AF24F3600D76831 /* CryptoTrackerApp.swift in Sources */,
+				55B3D3D02AF2502000D76831 /* Coin.swift in Sources */,
+				55B3D3D12AF2502000D76831 /* PopoverCoinView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,11 +465,14 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gokulakrishnan.CryptoTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -456,11 +495,14 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gokulakrishnan.CryptoTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
