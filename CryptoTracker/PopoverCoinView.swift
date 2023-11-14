@@ -193,7 +193,6 @@ struct PopoverCoinView: View {
         
             
         }
-        
     }
     
     func fetchData() {
