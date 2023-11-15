@@ -23,6 +23,7 @@
 		55B3D3D22AF2502000D76831 /* MenuBarCoinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B3D3CA2AF2501F00D76831 /* MenuBarCoinView.swift */; };
 		55B3D3D32AF2502000D76831 /* PopoverCoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B3D3CB2AF2501F00D76831 /* PopoverCoinViewModel.swift */; };
 		55B3D3D52AF2503D00D76831 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55B3D3D42AF2503D00D76831 /* Info.plist */; };
+		55BE4E7B2B04CDA1005323F0 /* SalesAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BE4E7A2B04CDA1005323F0 /* SalesAnnotationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		55B3D3CA2AF2501F00D76831 /* MenuBarCoinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBarCoinView.swift; sourceTree = "<group>"; };
 		55B3D3CB2AF2501F00D76831 /* PopoverCoinViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverCoinViewModel.swift; sourceTree = "<group>"; };
 		55B3D3D42AF2503D00D76831 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		55BE4E7A2B04CDA1005323F0 /* SalesAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesAnnotationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 				55B3D3CA2AF2501F00D76831 /* MenuBarCoinView.swift */,
 				55B3D3C52AF2501F00D76831 /* MenuBarCoinViewModel.swift */,
 				55B3D3C92AF2501F00D76831 /* PopoverCoinView.swift */,
+				55BE4E7A2B04CDA1005323F0 /* SalesAnnotationView.swift */,
 				55B3D3CB2AF2501F00D76831 /* PopoverCoinViewModel.swift */,
 				550F44A82AFB92D600A5391E /* ChartView.swift */,
 			);
@@ -295,6 +298,7 @@
 				55B3D3CF2AF2501F00D76831 /* CoinType.swift in Sources */,
 				55B3D3CC2AF2501F00D76831 /* AppDelegate.swift in Sources */,
 				55B3D39A2AF24F3600D76831 /* CryptoTrackerApp.swift in Sources */,
+				55BE4E7B2B04CDA1005323F0 /* SalesAnnotationView.swift in Sources */,
 				55B3D3D02AF2502000D76831 /* Coin.swift in Sources */,
 				55B3D3D12AF2502000D76831 /* PopoverCoinView.swift in Sources */,
 			);

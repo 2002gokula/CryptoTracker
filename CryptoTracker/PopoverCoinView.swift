@@ -7,27 +7,7 @@
 
 import SwiftUI
 import Charts
-struct MonthlyHoursOfSunshine {
-    var city: String
-    var date: Date
-    var hoursOfSunshine: Double
 
-
-    init(city: String, month: Int, hoursOfSunshine: Double) {
-        let calendar = Calendar.autoupdatingCurrent
-        self.city = city
-        self.date = calendar.date(from: DateComponents(year: 2020, month: month))!
-        self.hoursOfSunshine = hoursOfSunshine
-    }
-}
-
-
-var data: [MonthlyHoursOfSunshine] = [
-    MonthlyHoursOfSunshine(city: "Seattle", month: 1, hoursOfSunshine: 74),
-    MonthlyHoursOfSunshine(city: "Cupertino", month: 1, hoursOfSunshine: 196),
-    MonthlyHoursOfSunshine(city: "Seattle", month: 12, hoursOfSunshine: 62),
-    MonthlyHoursOfSunshine(city: "Cupertino", month: 12, hoursOfSunshine: 199)
-]
 
 
 struct PriceChart: Identifiable, Hashable , Decodable {
@@ -67,9 +47,11 @@ struct PopoverCoinView: View {
         formatter.dateFormat = "HH:mm"
         return formatter
     }()
-
+ 
+ 
     var cheeseburgerCost: [Food] {
         var result: [Food] = []
+      
 
         for (_, item) in chartData.enumerated() {
             for price in item.prices {
@@ -84,33 +66,7 @@ struct PopoverCoinView: View {
 
         return result
     }
-//    var cheeseburgerCost: [Food] {
-//            return chartData.enumerated().flatMap { (index, item) in
-//                item.prices.map { price in
-//                    Food(name: "Cheeseburger-\(index)", price: Double(price), year: 1 + index)
-//                }
-//            }
-//        }
-//    func printCheeseburgerCost() {
-//        let cost = cheeseburgerCost
-//        print(cost)
-//    }
 
-    // Or directly in your code where you need it:
-
-  
-//    let cheeseburgerCostByItem: [Food] = [
-//        .init(name: "Burger", price: 0.07, year: 1960),
-//        .init(name: "Cheese", price: 0.03, year: 1960),
-//        .init(name: "Bun", price: 0.05, year: 1960),
-//        .init(name: "Burger", price: 0.10, year: 1970),
-//        .init(name: "Cheese", price: 0.04, year: 1970),
-//        .init(name: "Bun", price: 0.06, year: 1970),
-//        // ...
-//        .init(name: "Burger", price: 0.60, year: 2020),
-//        .init(name: "Cheese", price: 0.26, year: 2020),
-//        .init(name: "Bun", price: 0.24, year: 2020)
-//    ]
     var body: some View {
         VStack(spacing: 16) {
             VStack {
@@ -158,25 +114,9 @@ struct PopoverCoinView: View {
                         .font(.title.bold())
                 }
                 
-//                Chart {
-//                    ForEach(cheeseburgerCost , id: \.id) { cost in
-//                        AreaMark(
-//                            x: .value("Date", cost.price),
-//                            y: .value("Price", cost.date)
-//                        )
-//                        .foregroundStyle(Color.gray)
-//                    }
-//                }
-//                List(cheeseburgerCost, id: \.name) { food in
-//                               VStack(alignment: .leading) {
-//                                   Text("Name: \(food.name)")
-//                                   Text("Price: $\(food.price)")
-//                                  
-//                               }
-//                           }
+
                 AnimatedChart(item: cheeseburgerCost)
             }
-            
             Button("Quit") {
                 NSApp.terminate(self)
             }
@@ -190,13 +130,25 @@ struct PopoverCoinView: View {
         .onAppear {
             viewModel.subscribeToService()
             fetchData()
-        
-            
         }
     }
+    func getCurrentTime() -> String {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            return dateFormatter.string(from: Date())
+        }
+
+        func getCurrentUnixTimestamp() -> TimeInterval {
+            return Date().timeIntervalSince1970
+        }
+
+        func getUnixTimestampOneHourAgo() -> TimeInterval {
+            let oneHourAgo = Date().addingTimeInterval(-3600) // 3600 seconds in 1 hour || 604800 Seconds in 1 week ||     86400 Seconds in day || 2629743 Seconds in Month || 31556926 Seconds in Year
+            return oneHourAgo.timeIntervalSince1970
+        }
     
     func fetchData() {
-        guard let url = URL(string: "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=10") else { return }
+        guard let url = URL(string: "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart/range?vs_currency=usd&from=\(getUnixTimestampOneHourAgo())&to=\(getCurrentUnixTimestamp())") else { return }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
@@ -223,18 +175,57 @@ struct PopoverCoinView: View {
     }
 }
 
-@ViewBuilder
+
 func AnimatedChart(item: [Food]) -> some View {
-    Chart {
-        ForEach(Array(item.enumerated()), id: \.offset) { index, value in
-            LineMark(
-                x: .value("Date", index),
-                y: .value("Value", value.price)
-           
-            )
+    @State  var isLoading = true
+    @State var select = "0"
+    @State var isHovering = false
+    @State  var selectedDate: Date?
+    
+    // Calculate min and max prices
+    let minPrice = item.map { $0.price }.min() ?? 0
+    let maxPrice = item.map { $0.price }.max() ?? 0
+    
+    return VStack{
+        
+        GroupBox ( "BitCoin") {
+            Chart {
+        
+                ForEach(Array(item.enumerated()), id: \.offset) { index, value in
+                    LineMark(
+                        x: .value("Hour", value.name),
+                        y: .value("Price", value.price)
+                    )
+                    .interpolationMethod(.catmullRom)
+                    
+                    AreaMark(
+                        x: .value("Hour", value.name),
+                        y: .value("Price", value.price)
+                    )
+                    .interpolationMethod(.catmullRom)
+                    .foregroundStyle(Color("Blue").opacity(0.1).gradient)
+                    
+                    RuleMark(
+                        y: .value("Threshold", 400)
+                    )
+                    .foregroundStyle(.red)
+                }
+                
+            }
+            .padding()
+            .chartYAxis() {
+                AxisMarks(position: .leading)
+            }
+            .frame(height: 250)
+            .chartYScale(domain: minPrice...maxPrice) // Set domain based on min and max prices
+            .chartYAxis() {
+                AxisMarks(position: .leading)
+            }
+            .chartLegend(position: .overlay, alignment: .top)
         }
     }
 }
+
 struct PopoverCoinView_Previews: PreviewProvider {
     static var previews: some View {
         PopoverCoinView(viewModel: .init(title: "Bitcoin", subtitle: "$40,000"))
