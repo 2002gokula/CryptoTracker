@@ -175,6 +175,8 @@
 			dependencies = (
 			);
 			name = CryptoTracker;
+			packageProductDependencies = (
+			);
 			productName = CryptoTracker;
 			productReference = 55B3D3962AF24F3600D76831 /* CryptoTracker.app */;
 			productType = "com.apple.product-type.application";
@@ -247,6 +249,8 @@
 				Base,
 			);
 			mainGroup = 55B3D38D2AF24F3600D76831;
+			packageReferences = (
+			);
 			productRefGroup = 55B3D3972AF24F3600D76831 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

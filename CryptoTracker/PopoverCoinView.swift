@@ -6,9 +6,8 @@
 //
 
 import SwiftUI
+import SwiftUICharts
 import Charts
-
-
 
 struct PriceChart: Identifiable, Hashable , Decodable {
     let prices, marketCaps, totalVolumes: [[Double]]
@@ -19,6 +18,46 @@ struct PriceChart: Identifiable, Hashable , Decodable {
         case totalVolumes = "total_volumes"
     }
     
+}
+
+enum Duration: String, CaseIterable {
+ 
+//        case tenMinutes = "10m"
+//        case thirtyMinutes = "30m"
+    case oneHour = "1h"
+//        case fourHours = "4h"
+//        case eightHours = "8h"
+    case day = "24h"
+    case sevenDays = "7d"
+    case fourteenDays = "14d"
+    case thirtyDays = "30d"
+    case ninetyDays = "90d"
+    case oneEightyDays = "180d"
+    case oneYear = "1 Year"
+
+
+    var isActive: Bool {
+        return self == .sevenDays // Set .sevenDays as default active
+    }
+
+    var timeInterval: TimeInterval {
+        switch self {
+ 
+//            case .tenMinutes: return 60 * 10 // 60 seconds in 1 minute * 10 minutes
+//            case .thirtyMinutes: return 60 * 30 // 60 seconds in 1 minute * 30 minutes
+//            case .fourHours: return 3600 * 4 // 3600 seconds in 1 hour * 4 hours
+//            case .eightHours: return 3600 * 8 // 3600 seconds in 1 hour * 8 hours
+        case .oneHour: return 3600 // 3600 seconds in 1 hour
+            case .day: return 86400 // Replace with actual time interval for "24h"
+            case .sevenDays: return 604800 // 604800 seconds in 7 days
+            case .fourteenDays: return 86400 * 14 // 86400 seconds in 1 day * 14 days
+            case .thirtyDays: return 86400 * 30 // 86400 seconds in 1 day * 30 days
+            case .ninetyDays: return 86400 * 90 // 86400 seconds in 1 day * 90 days
+            case .oneEightyDays: return 86400 * 180 // 86400 seconds in 1 day * 180 days
+            case .oneYear: return 86400 * 365 // 86400 seconds in 1 day * 365 days
+          // 60 seconds in 1 minute * 5 minutes
+        }
+    }
 }
 
 struct Food: Identifiable {
@@ -40,33 +79,60 @@ struct Food: Identifiable {
 struct PopoverCoinView: View {
 
     @ObservedObject var viewModel: PopoverCoinViewModel
-    @State var currentTab: String = "7 Days"
+    @State private var selectedDuration: Duration = {
+           if let storedDuration = UserDefaults.standard.string(forKey: "selectedDuration"),
+              let duration = Duration(rawValue: storedDuration) {
+               return duration
+           } else {
+               return .day // Default value if no stored value found
+           }
+       }()
+
+
     @State private var chartData: [PriceChart] = []
-    let dateFormatter: DateFormatter = {
+    
+    
+    var dateFormat: String {
+        switch selectedDuration {
+        case .oneHour:
+            return "HH:mm"
+        case .day:
+            return "yyyy-MM-dd HH:mm:ss"
+        case .sevenDays, .fourteenDays, .thirtyDays,
+             .ninetyDays, .oneEightyDays, .oneYear:
+            return "yyyy-MM-dd HH:mm:ss"
+        }
+    }
+
+    // Use a local variable to capture self as an unowned reference within the closure
+    var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
+        formatter.dateFormat = self.dateFormat
         return formatter
-    }()
- 
+    }
+
+    // Usage of dateFormatter
+   
  
     var cheeseburgerCost: [Food] {
         var result: [Food] = []
-      
+
 
         for (_, item) in chartData.enumerated() {
             for price in item.prices {
                 let timestamp = price[0] / 1000 // Assuming the timestamp is in milliseconds
                        let date = Date(timeIntervalSince1970: timestamp)
                       
-
-                let food = Food(name: dateFormatter.string(from: date), price: Double(price[1]), year: Int(price[0]))
+                let formattedDate = dateFormatter.string(from: date)
+                let food = Food(name: formattedDate, price: Double(price[1]), year: Int(price[0]))
                 result.append(food)
             }
         }
 
         return result
     }
-
+    
+    
     var body: some View {
         VStack(spacing: 16) {
             VStack {
@@ -101,12 +167,17 @@ struct PopoverCoinView: View {
                 HStack{
                     Text("Price")
                     
-                    Picker("Duration", selection: $currentTab) {
-                        Text("7 Days").tag("7 Days")
-                        Text("Week").tag("Week")
-                        Text("Month").tag("Month")
-                    }
-                    .pickerStyle(.segmented)
+                    Picker("Duration", selection: $selectedDuration) {
+                               ForEach(Duration.allCases, id: \.self) { duration in
+                                   Text(duration.rawValue).tag(duration)
+                               }
+                           }
+                           .pickerStyle(.segmented)
+                           .onChange(of: selectedDuration) { newValue in
+                               UserDefaults.standard.set(newValue.rawValue, forKey: "selectedDuration")
+                               print(newValue.timeInterval)
+                               fetchData()
+                           }
                 }
                 VStack(alignment: .leading) {
                     Text(viewModel.subtitle)
@@ -114,8 +185,8 @@ struct PopoverCoinView: View {
                         .font(.title.bold())
                 }
                 
-
                 AnimatedChart(item: cheeseburgerCost)
+//                AnimatedChart()
             }
             Button("Quit") {
                 NSApp.terminate(self)
@@ -126,10 +197,12 @@ struct PopoverCoinView: View {
             viewModel.updateView()
             fetchData()
           
+          
         }
         .onAppear {
             viewModel.subscribeToService()
             fetchData()
+           
         }
     }
     func getCurrentTime() -> String {
@@ -142,13 +215,14 @@ struct PopoverCoinView: View {
             return Date().timeIntervalSince1970
         }
 
-        func getUnixTimestampOneHourAgo() -> TimeInterval {
-            let oneHourAgo = Date().addingTimeInterval(-3600) // 3600 seconds in 1 hour || 604800 Seconds in 1 week ||     86400 Seconds in day || 2629743 Seconds in Month || 31556926 Seconds in Year
-            return oneHourAgo.timeIntervalSince1970
-        }
-    
+    func getUnixTimestampAgo() -> TimeInterval {
+        let timeInterval = selectedDuration.timeInterval
+        let agoDate = Date().addingTimeInterval(-timeInterval)
+        return agoDate.timeIntervalSince1970
+    }
+
     func fetchData() {
-        guard let url = URL(string: "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart/range?vs_currency=usd&from=\(getUnixTimestampOneHourAgo())&to=\(getCurrentUnixTimestamp())") else { return }
+        guard let url = URL(string: "https://api.coingecko.com/api/v3/coins/\(viewModel.title.count == 0 ? "bitcoin": viewModel.title.lowercased() )/market_chart/range?vs_currency=usd&from=\(getUnixTimestampAgo())&to=\(getCurrentUnixTimestamp())") else { return }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
@@ -176,19 +250,38 @@ struct PopoverCoinView: View {
 }
 
 
+
+
 func AnimatedChart(item: [Food]) -> some View {
     @State  var isLoading = true
     @State var select = "0"
     @State var isHovering = false
     @State  var selectedDate: Date?
     
-    // Calculate min and max prices
-    let minPrice = item.map { $0.price }.min() ?? 0
-    let maxPrice = item.map { $0.price }.max() ?? 0
+    let prices = item.map { $0.price }
+    let minPrice = prices.min() ?? 0
+    let maxPrice = prices.max() ?? 0
+
+    // Calculate average price
+    let totalPrice = prices.reduce(0, +)
+    let averagePrice = Double(totalPrice) / Double(prices.count)
+
+    var formattedPrices: [String] = []
     
+    item.forEach { food in
+        let formattedPrice = String(format: "%.2f%%", food.price)
+        formattedPrices.append(formattedPrice)
+            }
+
     return VStack{
-        
+      
         GroupBox ( "BitCoin") {
+            GeometryReader { geometry in
+                Text("\(averagePrice)")
+                                .foregroundColor(.white)
+                                .position(x: 53, y: geometry.size.height * 44)
+                        }
+            
             Chart {
         
                 ForEach(Array(item.enumerated()), id: \.offset) { index, value in
@@ -198,33 +291,40 @@ func AnimatedChart(item: [Food]) -> some View {
                     )
                     .interpolationMethod(.catmullRom)
                     
+                    
                     AreaMark(
                         x: .value("Hour", value.name),
                         y: .value("Price", value.price)
                     )
                     .interpolationMethod(.catmullRom)
                     .foregroundStyle(Color("Blue").opacity(0.1).gradient)
-                    
-                    RuleMark(
-                        y: .value("Threshold", 400)
-                    )
-                    .foregroundStyle(.red)
+                  
+//                    RuleMark(
+//                        y: .value("Threshold", averagePrice+2)
+//                    )
+//                    .foregroundStyle(.red)
+                  
                 }
-                
             }
+
             .padding()
             .chartYAxis() {
                 AxisMarks(position: .leading)
             }
             .frame(height: 250)
-            .chartYScale(domain: minPrice...maxPrice) // Set domain based on min and max prices
-            .chartYAxis() {
-                AxisMarks(position: .leading)
-            }
+            .chartYScale(domain: minPrice...maxPrice)
             .chartLegend(position: .overlay, alignment: .top)
         }
     }
 }
+//struct AxisValueLabel: View {
+//    var price: Double
+//    
+//    var body: some View {
+//        Text("$\(String(format: "%.2f", price))") // Displaying price with a "$" symbol
+//    }
+//}
+
 
 struct PopoverCoinView_Previews: PreviewProvider {
     static var previews: some View {

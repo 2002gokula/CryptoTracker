@@ -57,12 +57,12 @@ class CoinCapPriceService: NSObject {
             case .success(let message):
                 switch message {
                 case .string(let text):
-                    print("Received text message: \(text)")
+//                    print("Received text message: \(text)")
                     if let data = text.data(using: .utf8) {
                         self.onReceiveData(data)
                     }
                 case .data(let data):
-                    print("Received binary message: \(data)")
+//                    print("Received binary message: \(data)")
                     self.onReceiveData(data)
                 default: break
                 }
@@ -99,7 +99,7 @@ class CoinCapPriceService: NSObject {
             
             if task.state == .running, self.pingTryCount < 2 {
                 self.pingTryCount += 1
-                print("Ping: Send Ping \(self.pingTryCount)")
+//                print("Ping: Send Ping \(self.pingTryCount)")
                 task.sendPing { [weak self] error in
                     if let error = error {
                         print("Ping failed: \(error.localizedDescription)")
